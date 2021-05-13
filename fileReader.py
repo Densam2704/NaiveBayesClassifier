@@ -17,9 +17,9 @@ maxDur=max(durList)
 minDur=min(durList)
 meanDur=mean(durList)
 
-print("maxDur= ",maxDur)
-print("minDur= ",minDur)
-print("meanDur= ",meanDur)
+print("maxDur = ",maxDur)
+print("minDur = ",minDur)
+print("meanDur = ",meanDur)
 
 
 
