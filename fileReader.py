@@ -20,6 +20,7 @@ meanDur=mean(durList)
 print("maxDur = ",maxDur)
 print("minDur = ",minDur)
 print("meanDur = ",meanDur)
+print("list len = ",durList.__len__())
 
 
 
