@@ -30,7 +30,7 @@ class FileReader():
     # #Read packet length
     def readPacketLengths(self, lenPath):
         f = open(lenPath)
-        lengthsList = [[]]
+        lengthsList = []
         sessionLenList = []
         for line in f:
             if line.isspace():
@@ -44,7 +44,7 @@ class FileReader():
     # Read intervals (inter packet times)
     def readIntervals(self, intervalPath):
         f = open(intervalPath)
-        intervalsList = [[]]
+        intervalsList = []
         sessionIntervalList = []
         for line in f:
             if line.isspace():

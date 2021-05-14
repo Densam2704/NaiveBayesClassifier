@@ -11,33 +11,53 @@ durations = fileReader.readDurations(durPath)
 intervals = fileReader.readIntervals(intervalPath)
 lengths = fileReader.readPacketLengths(lenPath)
 
-print(durations.__len__())
-x = durations
-y = []
+# Session length = sum of all packets lengths in session
+sessionLengthsList = []
+# Intensity = number of pkts / duration
+intesities = []
+# Packet nums in session
+# pktNums = []
+i = 0
+
+
 for length in lengths:
-    y.append(sum(length))
-y.__delitem__(0)
+    lengthSum = sum(length)
+    sessionLengthsList.append(lengthSum)
+    if durations.__getitem__(i) == 0:
+        intesities.append(float(0))
+    else:
+        intesities.append(float(lengthSum/durations.__getitem__(i)))
 
-# subplot(x1,x2,x3)
-# Первое определяет количество частей, на которое нужно разбить объект по вертикали.
-# Второе — горизонтальное разделение.
-# А третье число указывает на текущий подграфик, для которого будут актуальны команды.
+    i += 1
+
+
 plot1 = plt.figure(1)
-
+plt.subplot(211)
 plt.title("Session Lengths", fontsize=14, fontname='Times New Roman')
-plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman')
 plt.ylabel("Length, bytes", fontsize=14, fontname='Times New Roman')
-plt.scatter(x, y)
-plt.savefig(pathToSave+'Length(duration).png')
+plt.scatter(durations, sessionLengthsList)
 
+plt.subplot(212)
+plt.ylabel("Length, bytes", fontsize=14, fontname='Times New Roman')
+plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman')
+plt.yscale('log')
+plt.scatter(durations, sessionLengthsList)
+
+plt.savefig(pathToSave + 'Length(duration).png')
 
 plot2 = plt.figure(2)
+plt.subplot(211)
 plt.title("Session Intensity", fontsize=14, fontname='Times New Roman')
-plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman')
-plt.ylabel("Length, bytes", fontsize=14, fontname='Times New Roman')
-plt.scatter(x, y)
-plt.savefig(pathToSave+'Intensity(duration).png')
+plt.ylabel("Intensity, bytes per second", fontsize=14, fontname='Times New Roman')
+plt.scatter(durations, intesities)
 
+plt.subplot(212)
+plt.ylabel("Intensity, bytes per second", fontsize=14, fontname='Times New Roman')
+plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman')
+plt.yscale('log')
+plt.scatter(durations, sessionLengthsList)
+
+plt.savefig(pathToSave + 'Intensity(duration).png')
 plt.show()
 
 input()
