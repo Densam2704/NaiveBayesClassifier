@@ -1,48 +1,67 @@
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-def mean(list):
-    sum_num = 0
-    for t in list:
-        sum_num = sum_num + t
 
-    avg = sum_num / len(list)
-    return avg
+class FileReader():
 
-#Read durations
-durPath = 'C:\Study\Programming\Python Projects\data\All sessions\\session duration.txt'
-f = open(durPath)
-durable = 0
-durList = []
-for line in f:
-    durList.append(float(line))
-    if float(line) > 61.0:
-        durable += 1
+    def __init__(self):
+        self
+    #
+    # def mean(list):
+    #     sum_num = 0
+    #     for t in list:
+    #         sum_num = sum_num + t
+    #
+    #     avg = sum_num / len(list)
+    #     return avg
 
-maxDur = max(durList)
-minDur = min(durList)
-meanDur = mean(durList)
+    # #Read durations
+    def readDurations(self,durPath):
+        f = open(durPath)
+        durList = []
+        for line in f:
+            durList.append(float(line))
 
-# print("Durable sessions number ", durable)
-# print("maxDur = ", maxDur)
-# print("minDur = ", minDur)
-# print("meanDur = ", meanDur)
-# print("list len = ", durList.__len__())
+        print("durations were successfully read")
+        return durList
 
-#Read packet length
-lenPath = 'C:\Study\Programming\Python Projects\data\All sessions\\packet lengths in sessions.txt'
-f = open(lenPath)
-lengthsList = [[]]
-sessionLenList = []
-for line in f:
-    if line.isspace():
-        lengthsList.append(sessionLenList)
+
+    # #Read packet length
+    def readPacketLengths(self, lenPath):
+        f = open(lenPath)
+        lengthsList = [[]]
         sessionLenList = []
-    else:
-        sessionLenList.append(int(line))
+        for line in f:
+            if line.isspace():
+                lengthsList.append(sessionLenList)
+                sessionLenList = []
+            else:
+                sessionLenList.append(int(line))
+        print("lengths were successfully read")
+        return lengthsList
 
-print(lengthsList[lengthsList.__len__() - 1])
 
-# Plots
-x = []
-y = []
+    #Read intervals (inter packet times)
+    def readIntervals(self, intervalPath):
+        f = open(intervalPath)
+        intervalsList = [[]]
+        sessionIntervalList = []
+        for line in f:
+            if line.isspace():
+                intervalsList.append(sessionIntervalList)
+                sessionIntervalList = []
+            else:
+                sessionIntervalList.append(float(line))
+        print("intervals were successfully read")
+        return intervalsList
+
+if __name__ == "__main__":
+
+    durPath = 'C:\Study\Programming\Python Projects\data\All sessions\\session duration.txt'
+    intervalPath = 'C:\Study\Programming\Python Projects\data\All sessions\\packet intervals in sessions.txt'
+    lenPath = 'C:\Study\Programming\Python Projects\data\All sessions\\packet lengths in sessions.txt'
+
+    fileReader = FileReader()
+    durations = fileReader.readDurations(durPath)
+    intervals = fileReader.readIntervals(intervalPath)
+    lengths = fileReader.readPacketLengths(lenPath)
