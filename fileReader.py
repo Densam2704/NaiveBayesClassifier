@@ -83,7 +83,7 @@ class FileReader:
                 intensities.append(float(lengthSum / self.durations.__getitem__(i)))
             i += 1
 
-        print("Intensities were counted")
+        print("intensities were counted")
         return intensities
 
     def countLengthsPerSession(self):
@@ -92,7 +92,7 @@ class FileReader:
         for length in self.lengths:
             sumLengthsList.append(sum(length))
 
-        print("Lengths per session were counted")
+        print("lengths per session were counted")
         return sumLengthsList
 
 
