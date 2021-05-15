@@ -3,10 +3,22 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-class FileReader():
+class FileReader:
+    durations = []
+    lengths = []
+    intervals = []
+    intensities = []
+    lengthsPerSession = []
 
-    def __init__(self):
-        self
+    # def __init__(self):
+    #     self
+
+    def __init__(self,durPath,intervalPath,lengthPath):
+        self.durations = self.readDurations(durPath)
+        self.lengths = self.readPacketLengths(lengthPath)
+        self.intervals = self.readIntervals(intervalPath)
+        self.intensities = self.countIntensities()
+        self.lengthsPerSession = self.countLengthsPerSession()
 
     #
     # def mean(list):
@@ -17,8 +29,9 @@ class FileReader():
     #     avg = sum_num / len(list)
     #     return avg
 
-    # #Read durations
-    def readDurations(self, durPath):
+    # Read durations
+    @staticmethod
+    def readDurations(durPath):
         f = open(durPath)
         durList = []
         for line in f:
@@ -27,8 +40,9 @@ class FileReader():
         print("durations were successfully read")
         return durList
 
-    # #Read packet length
-    def readPacketLengths(self, lenPath):
+    # Read packet length
+    @staticmethod
+    def readPacketLengths(lenPath):
         f = open(lenPath)
         lengthsList = []
         sessionLenList = []
@@ -42,7 +56,8 @@ class FileReader():
         return lengthsList
 
     # Read intervals (inter packet times)
-    def readIntervals(self, intervalPath):
+    @staticmethod
+    def readIntervals(intervalPath):
         f = open(intervalPath)
         intervalsList = []
         sessionIntervalList = []
@@ -54,6 +69,45 @@ class FileReader():
                 sessionIntervalList.append(float(line))
         print("intervals were successfully read")
         return intervalsList
+
+    # Intensity = sum packet lengths per session / duration
+    def countIntensities(self):
+        intensities = []
+        i = 0
+
+        for length in self.lengths:
+            lengthSum = sum(length)
+            if self.durations.__getitem__(i) == 0:
+                intensities.append(float(0))
+            else:
+                intensities.append(float(lengthSum / self.durations.__getitem__(i)))
+            i += 1
+
+        print("Intensities were counted")
+        return intensities
+
+    def countLengthsPerSession(self):
+        sumLengthsList = []
+
+        for length in self.lengths:
+            sumLengthsList.append(sum(length))
+
+        print("Lengths per session were counted")
+        return sumLengthsList
+
+
+
+    # Getters
+    def getDurations(self):
+        return self.durations
+    def getLengths(self):
+        return self.lengths
+    def getIntervals(self):
+        return self.intervals
+    def getIntensities(self):
+        return self.intensities
+    def getLengthsPerSession(self):
+        return self.lengthsPerSession
 
 
 # if __name__ == "__main__":
