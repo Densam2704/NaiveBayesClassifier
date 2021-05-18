@@ -1,6 +1,11 @@
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
+import numpy as np
+import pandas as pd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # X, y = load_iris(return_X_y=True)
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=0)
@@ -25,15 +30,14 @@ discordLenPath = 'C:\Study\Programming\Python Projects\data\Discord\\discord pac
 discordPathToSave = 'C:\Study\Programming\Python Projects\img\Discord\\'
 
 allReader = FileReader(allDurPath, allIntervalPath, allLenPath)
-telegramReader = FileReader(telegramDurPath, telegramIntervalPath, telegramLenPath)
-discordReader = FileReader(discordDurPath, discordIntervalPath, discordLenPath)
-
 allPlotMaker = PlotMaker(allReader, allPathToSave)
 allPlotMaker.make()
 
+telegramReader = FileReader(telegramDurPath, telegramIntervalPath, telegramLenPath)
 telegramPlotMaker = PlotMaker(telegramReader, telegramPathToSave)
 telegramPlotMaker.make()
 
+discordReader = FileReader(discordDurPath, discordIntervalPath, discordLenPath)
 discordPlotMaker = PlotMaker(discordReader,discordPathToSave)
 discordPlotMaker.make()
 
