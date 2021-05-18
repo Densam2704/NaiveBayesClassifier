@@ -37,4 +37,4 @@ telegramPlotMaker.make()
 discordPlotMaker = PlotMaker(discordReader,discordPathToSave)
 discordPlotMaker.make()
 
-PlotMaker.showPlots()
+PlotMaker.showPlots(PlotMaker)
