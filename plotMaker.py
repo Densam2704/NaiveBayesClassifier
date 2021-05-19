@@ -21,6 +21,21 @@ class PlotMaker:
         self.makePlot2()
         self.makePlot3()
 
+    # def makeFatDotPlot(self):
+    #     durations = pd.DataFrame(self.fileReader.getDurations())
+    #     lengthPerSessionList =pd.DataFrame(self.fileReader.getLengthsPerSession())
+    #     df=pd.merge(durations,lengthPerSessionList,str ="full")
+    #
+    #     print(df[0])
+    #     # fig,ax = plt.subplots(figsize=(8, 6),dpi=80)
+    #     # sns.stripplot(durations,lengthPerSessionList,size=durations.size*2, ax=ax)
+    #     # plt.title("Lengths (Duration)", fontsize=14, fontname='Times New Roman')
+    #     #
+    #     #
+    #     # plt.savefig(self.pathToSave + 'Length(duration).png')
+    #     # self.nextFigure()
+    #     # self.showPlots()
+
     def makePlot1(self):
         durations = self.fileReader.getDurations()
         lengthPerSessionList = self.fileReader.getLengthsPerSession()
@@ -45,7 +60,7 @@ class PlotMaker:
         plt.ylabel("Intensity,\n bytes per second", fontsize=14, fontname='Times New Roman')
         plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman', labelpad=0.1)
         plt.yscale('log')
-        plt.scatter(durations, intensities)
+        plt.scatter(durations, intensities,color='r')
         plt.savefig(pathToSave + 'Intensity(duration).png')
 
         self.nextFigure()
@@ -60,7 +75,7 @@ class PlotMaker:
         plt.xlabel("Length, bytes", fontsize=14, fontname='Times New Roman')
         plt.ylabel("Intensity,\n bytes per second", fontsize=14, fontname='Times New Roman')
         plt.xscale('log')
-        plt.scatter(lengthPerSessionList, intensities)
+        plt.scatter(lengthPerSessionList, intensities,color='g')
         plt.tight_layout(h_pad=-0.88)
         plt.savefig(pathToSave + 'Intensity(lengths).png')
 
