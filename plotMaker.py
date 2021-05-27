@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from fileReader import FileReader
 
+
 class StaticVariables:
     figureNum = 1
+
 
 class PlotMaker:
     fileReader = ""
@@ -15,6 +17,7 @@ class PlotMaker:
     def __init__(self, fileReader, pathToSave):
         self.fileReader = fileReader
         self.pathToSave = pathToSave
+        self.make()
 
     def make(self):
         self.makePlot1()
@@ -38,14 +41,15 @@ class PlotMaker:
 
     def makePlot1(self):
         durations = self.fileReader.getDurations()
-        lengthPerSessionList = self.fileReader.getLengthsPerSession()
+        sessionLengths = self.fileReader.getSessionLengths()
         pathToSave = self.pathToSave
         plot1 = plt.figure(StaticVariables.figureNum, figsize=(8, 6))
-        plt.title("Lengths (Duration)", fontsize=14, fontname='Times New Roman')
+        plt.title(self.fileReader.getFileGroupName() + " Lengths (Duration)", fontsize=14, fontname='Times New Roman')
         plt.ylabel("Length, bytes", fontsize=12, fontname='Times New Roman')
         plt.xlabel("Duration, s", fontsize=12, fontname='Times New Roman')
         plt.yscale('log')
-        plt.scatter(durations, lengthPerSessionList)
+        plt.grid()
+        plt.scatter(durations, sessionLengths)
         plt.savefig(pathToSave + 'Length(duration).png')
 
         self.nextFigure()
@@ -56,37 +60,39 @@ class PlotMaker:
         pathToSave = self.pathToSave
 
         plot2 = plt.figure(StaticVariables.figureNum, figsize=(8, 6))
-        plt.title(" Intensity (Duration)", fontsize=14, fontname='Times New Roman')
-        plt.ylabel("Intensity,\n bytes per second", fontsize=14, fontname='Times New Roman')
+        plt.title(self.fileReader.getFileGroupName() + " Intensity (Duration)", fontsize=14, fontname='Times New Roman')
+        plt.ylabel("Intensity,\n 1/s", fontsize=14, fontname='Times New Roman')
         plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman', labelpad=0.1)
         plt.yscale('log')
-        plt.scatter(durations, intensities,color='r')
+        plt.grid()
+        plt.scatter(durations, intensities, color='r')
         plt.savefig(pathToSave + 'Intensity(duration).png')
 
         self.nextFigure()
 
     def makePlot3(self):
-        lengthPerSessionList = self.fileReader.getLengthsPerSession()
-        intensities = self.fileReader.getIntensities()
+        durations = self.fileReader.getDurations()
+        throughputs = self.fileReader.getThroughputs()
         pathToSave = self.pathToSave
 
         plot3 = plt.figure(StaticVariables.figureNum, figsize=(8, 4))
-        plt.title("Intensity(Length)", fontsize=14, fontname='Times New Roman')
-        plt.xlabel("Length, bytes", fontsize=14, fontname='Times New Roman')
-        plt.ylabel("Intensity,\n bytes per second", fontsize=14, fontname='Times New Roman')
-        plt.xscale('log')
-        plt.scatter(lengthPerSessionList, intensities,color='g')
+        plt.title(self.fileReader.getFileGroupName() + " Throughput(Duration)", fontsize=14, fontname='Times New Roman')
+        plt.xlabel("Duration, s", fontsize=14, fontname='Times New Roman')
+        plt.ylabel("Throughput,\n bytes/s", fontsize=14, fontname='Times New Roman')
+        plt.yscale('log')
+        plt.scatter(durations, throughputs, color='g')
         plt.tight_layout(h_pad=-0.88)
-        plt.savefig(pathToSave + 'Intensity(lengths).png')
+        plt.grid()
+        plt.savefig(pathToSave + 'Throughput(duration).png')
 
         self.nextFigure()
 
     @staticmethod
     def showPlots(self):
-            plt.show()
+        plt.show()
 
     def nextFigure(self):
-        StaticVariables.figureNum+=1
-        print(StaticVariables.figureNum)
+        StaticVariables.figureNum += 1
+        # print(StaticVariables.figureNum)
 
 # input()

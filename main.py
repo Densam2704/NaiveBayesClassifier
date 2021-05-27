@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from Statistics import Statistics
 # X, y = load_iris(return_X_y=True)
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=0)
 # gnb = GaussianNB()
@@ -29,16 +29,16 @@ discordIntervalPath = 'C:\Study\Programming\Python Projects\data\Discord\\discor
 discordLenPath = 'C:\Study\Programming\Python Projects\data\Discord\\discord packet lengths in sessions.txt'
 discordPathToSave = 'C:\Study\Programming\Python Projects\img\Discord\\'
 
-allReader = FileReader(allDurPath, allIntervalPath, allLenPath)
+allReader = FileReader("All sessions ",allDurPath, allIntervalPath, allLenPath)
 allPlotMaker = PlotMaker(allReader, allPathToSave)
-allPlotMaker.make()
+allStatistics = Statistics(allReader)
 
-telegramReader = FileReader(telegramDurPath, telegramIntervalPath, telegramLenPath)
+telegramReader = FileReader("Telegram sessions ", telegramDurPath, telegramIntervalPath, telegramLenPath)
 telegramPlotMaker = PlotMaker(telegramReader, telegramPathToSave)
-telegramPlotMaker.make()
+telegramStatistics = Statistics(telegramReader)
 
-discordReader = FileReader(discordDurPath, discordIntervalPath, discordLenPath)
-discordPlotMaker = PlotMaker(discordReader,discordPathToSave)
-discordPlotMaker.make()
+discordReader = FileReader("Discord sessions ", discordDurPath, discordIntervalPath, discordLenPath)
+discordPlotMaker = PlotMaker(discordReader, discordPathToSave)
+discordStatistics = Statistics(discordReader)
 
 PlotMaker.showPlots(PlotMaker)
